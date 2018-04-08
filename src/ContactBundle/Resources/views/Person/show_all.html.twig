@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}ContactBundle:Person:showAll{% endblock %}
+
+{% block container %}
+    <a href="{{ path('contact_person_newget') }}" class="btn btn-success btn-outline">Add New Person</a>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for k,person in persons %}
+            <tr data-id="{{ person.id }}">
+                <td>{{ k+1 }}</td>
+                <td>
+                    <a href="{{ path('contact_person_showsingle', {'id':  person.id }) }}"
+                       class="list-group-item">{{ person.firstName }} {{ person.lastName }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td></td>
+                <td>no data</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
