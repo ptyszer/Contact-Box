@@ -52,17 +52,6 @@ class PersonController extends Controller
             return $this->redirectToRoute('contact_person_showsingle', ['id' => $person->getId()]);
         }
 
-//        $formFirstName = $request->get('firstName');
-//        $formLastName = $request->get('lastName');
-//        $description = $request->get('description');
-
-//        $person->setFirstName($formFirstName);
-//        $person->setLastName($formLastName);
-//        $person->setDescription($description);
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($person);
-//        $em->flush();
-
     }
 
     /**
@@ -77,7 +66,7 @@ class PersonController extends Controller
             ->add('firstName', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('lastName', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('description', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('save', SubmitType::class, ['label' => 'Add Person', 'attr' => ['class' => 'btn btn-primary']])
+            ->add('save', SubmitType::class, ['label' => 'Edit Person', 'attr' => ['class' => 'btn btn-primary']])
             ->getForm();
 
         return $this->render('@Contact/Person/modify.html.twig', array('form' => $form->createView()));
@@ -108,7 +97,6 @@ class PersonController extends Controller
             return $this->redirectToRoute('contact_person_showsingle', ['id' => $person->getId()]);
         }
 
-//        return $this->redirectToRoute('contact_person_showsingle', ['id' => $person->getId()]);
     }
 
     /**

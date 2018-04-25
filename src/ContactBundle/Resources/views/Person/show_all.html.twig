@@ -20,6 +20,14 @@
                     <a href="{{ path('contact_person_showsingle', {'id':  person.id }) }}"
                        class="list-group-item">{{ person.firstName }} {{ person.lastName }}</a>
                 </td>
+                <td>
+                    <a href="{{ path('contact_person_modifyget', {'id': person.id }) }}" title="Edit person">
+                        <i class="material-icons">mode_edit</i></a>
+                </td>
+                <td>
+                    <a href="{{ path('contact_person_delete', {'id': person.id }) }}" title="Delete person">
+                        <i class="material-icons">delete</i></a>
+                </td>
             </tr>
         {% else %}
             <tr>

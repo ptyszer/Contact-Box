@@ -10,8 +10,8 @@
             <h5 class="card-title">{{ person.firstName }} {{ person.lastName }}</h5>
             {#<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>#}
             <p class="card-text">{{ person.description }}</p>
-            {#<a href="#" class="card-link">Card link</a>#}
-            {#<a href="#" class="card-link">Another link</a>#}
+            <a href="{{ path('contact_person_modifyget', {'id': person.id }) }}" title="Edit person" class="card-link">Edit</a>
+            <a href="{{ path('contact_person_delete', {'id': person.id }) }}" title="Delete person" class="card-link">Delete</a>
         </div>
     </div>
 
