@@ -50,6 +50,21 @@ class Person
     private $imagePath;
 
     /**
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="person")
+     */
+    private $addresses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person")
+     */
+    private $phoneNumbers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Email", mappedBy="person")
+     */
+    private $emails;
+
+    /**
      * @return string
      */
     public function getImagePath()
@@ -64,7 +79,6 @@ class Person
     {
         $this->imagePath = $imagePath;
     }
-
 
     /**
      * Get id
@@ -147,5 +161,115 @@ class Person
     {
         return $this->description;
     }
-}
 
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->phoneNumbers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add phoneNumber
+     *
+     * @param \ContactBundle\Entity\Phone $phoneNumber
+     *
+     * @return Person
+     */
+    public function addPhoneNumber(\ContactBundle\Entity\Phone $phoneNumber)
+    {
+        $this->phoneNumbers[] = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Remove phoneNumber
+     *
+     * @param \ContactBundle\Entity\Phone $phoneNumber
+     */
+    public function removePhoneNumber(\ContactBundle\Entity\Phone $phoneNumber)
+    {
+        $this->phoneNumbers->removeElement($phoneNumber);
+    }
+
+    /**
+     * Get phoneNumbers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhoneNumbers()
+    {
+        return $this->phoneNumbers;
+    }
+
+    /**
+     * Add email
+     *
+     * @param \ContactBundle\Entity\Email $email
+     *
+     * @return Person
+     */
+    public function addEmail(\ContactBundle\Entity\Email $email)
+    {
+        $this->emails[] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Remove email
+     *
+     * @param \ContactBundle\Entity\Email $email
+     */
+    public function removeEmail(\ContactBundle\Entity\Email $email)
+    {
+        $this->emails->removeElement($email);
+    }
+
+    /**
+     * Get emails
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmails()
+    {
+        return $this->emails;
+    }
+
+    /**
+     * Add address
+     *
+     * @param \ContactBundle\Entity\Address $address
+     *
+     * @return Person
+     */
+    public function addAddress(\ContactBundle\Entity\Address $address)
+    {
+        $this->addresses[] = $address;
+
+        return $this;
+    }
+
+    /**
+     * Remove address
+     *
+     * @param \ContactBundle\Entity\Address $address
+     */
+    public function removeAddress(\ContactBundle\Entity\Address $address)
+    {
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+}
