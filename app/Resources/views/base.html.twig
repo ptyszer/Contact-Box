@@ -14,8 +14,9 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
 </head>
 <body>
-{% block body %}{% endblock %}
+{% include('navbar.html.twig') %}
 <div class="container">
+    <br>
     {% block container %}{% endblock %}
 </div>
 {% block javascripts %}{% endblock %}
