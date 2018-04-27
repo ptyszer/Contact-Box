@@ -3,22 +3,48 @@
 {% block title %}Edit person{% endblock %}
 
 {% block container %}
-    <h1>Edit person information:</h1>
+    <h4>Edit person information:</h4>
 
-    {{ form_start(form) }}
+    {{ form_start(formPerson) }}
     <div class="form-group">
-        {{ form_label(form.firstName) }}
-        {{ form_widget(form.firstName) }}
+        {{ form_label(formPerson.firstName) }}
+        {{ form_widget(formPerson.firstName) }}
     </div>
     <div class="form-group">
-        {{ form_label(form.lastName) }}
-        {{ form_widget(form.lastName) }}
+        {{ form_label(formPerson.lastName) }}
+        {{ form_widget(formPerson.lastName) }}
     </div>
     <div class="form-group">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
+        {{ form_label(formPerson.description) }}
+        {{ form_widget(formPerson.description) }}
     </div>
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {{ form_widget(formPerson) }}
+    {{ form_end(formPerson) }}
+
+    <h4>Add new address:</h4>
+
+    {{ form_start(formAddress) }}
+    <div class="form-group">
+        {{ form_label(formAddress.city) }}
+        {{ form_widget(formAddress.city) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formAddress.street) }}
+        {{ form_widget(formAddress.street) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formAddress.house) }}
+        {{ form_widget(formAddress.house) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formAddress.flat) }}
+        {{ form_widget(formAddress.flat) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(formAddress.type) }}
+        {{ form_widget(formAddress.type) }}
+    </div>
+    {{ form_widget(formAddress) }}
+    {{ form_end(formAddress) }}
 
 {% endblock %}
