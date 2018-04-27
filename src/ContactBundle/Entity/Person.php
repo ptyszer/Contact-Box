@@ -168,6 +168,8 @@ class Person
      */
     public function __construct()
     {
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
         $this->phoneNumbers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
