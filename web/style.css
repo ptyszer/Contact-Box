@@ -1,0 +1,14 @@
+.material-icons {
+    color: grey;
+}
+
+.modify {
+    cursor: pointer;
+    vertical-align: text-bottom;
+}
+
+.card {
+    width: 70%;
+    min-width: 30rem;
+    margin: 50px auto;
+}
