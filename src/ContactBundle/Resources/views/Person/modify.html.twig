@@ -3,48 +3,133 @@
 {% block title %}Edit person{% endblock %}
 
 {% block container %}
-    <h4>Edit person information:</h4>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Edit person information:</h5>
+            {{ form_start(formPerson) }}
+            <div class="form-group">
+                {{ form_label(formPerson.firstName) }}
+                {{ form_widget(formPerson.firstName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formPerson.lastName) }}
+                {{ form_widget(formPerson.lastName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formPerson.description) }}
+                {{ form_widget(formPerson.description) }}
+            </div>
+            {{ form_widget(formPerson) }}
+            {{ form_end(formPerson) }}
 
-    {{ form_start(formPerson) }}
-    <div class="form-group">
-        {{ form_label(formPerson.firstName) }}
-        {{ form_widget(formPerson.firstName) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(formPerson.lastName) }}
-        {{ form_widget(formPerson.lastName) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(formPerson.description) }}
-        {{ form_widget(formPerson.description) }}
-    </div>
-    {{ form_widget(formPerson) }}
-    {{ form_end(formPerson) }}
+            <div class="row">
+                <div class="col-1">
+                    <i class="material-icons">location_on</i>
+                </div>
+                <div class="col">
+                    {% for address in person.addresses %}
+                        <p class="card-text">
+                            {{ address.street }} {{ address.house }}{% if address.flat %}/{{ address.flat }}{% endif %}, {{ address.city }}{% if address.type %} - {{ address.type }}{% endif %}
+                            <i class="material-icons modify delete-address" data-id="{{ address.id }}" title="delete address">remove_circle</i>
+                        </p>
+                    {% else %}
+                        <p><i>no addresses...</i></p>
+                    {% endfor %}
+                </div>
+                <div class="col-2">
+                    <i class="material-icons modify" id="new-address" title="add new address">add_circle</i>
+                </div>
+            </div>
 
-    <h4>Add new address:</h4>
+            {{ form_start(formAddress) }}
+            <div class="form-group">
+                {{ form_label(formAddress.city) }}
+                {{ form_widget(formAddress.city) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formAddress.street) }}
+                {{ form_widget(formAddress.street) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formAddress.house) }}
+                {{ form_widget(formAddress.house) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formAddress.flat) }}
+                {{ form_widget(formAddress.flat) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formAddress.type) }}
+                {{ form_widget(formAddress.type) }}
+            </div>
+            {{ form_widget(formAddress) }}
+            {{ form_end(formAddress) }}
+            <br>
 
-    {{ form_start(formAddress) }}
-    <div class="form-group">
-        {{ form_label(formAddress.city) }}
-        {{ form_widget(formAddress.city) }}
+            <div class="row">
+                <div class="col-1">
+                    <i class="material-icons">email</i>
+                </div>
+                <div class="col">
+                    {% for email in person.emails %}
+                        <p class="card-text">
+                            {{ email.address }}{% if email.type %} - {{ email.type }}{% endif %}
+                            <i class="material-icons modify delete-email" data-id="{{ email.id }}" title="delete email">remove_circle</i>
+                        </p>
+                    {% else %}
+                        <p><i>no emails...</i></p>
+                    {% endfor %}
+                </div>
+                <div class="col-2">
+                    <i class="material-icons modify" id="new-email" title="add new email">add_circle</i>
+                </div>
+            </div>
+
+            {{ form_start(formEmail) }}
+            <div class="form-group">
+                {{ form_label(formEmail.address) }}
+                {{ form_widget(formEmail.address) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formEmail.type) }}
+                {{ form_widget(formEmail.type) }}
+            </div>
+            {{ form_widget(formEmail) }}
+            {{ form_end(formEmail) }}
+            <br>
+
+            <div class="row">
+                <div class="col-1">
+                    <i class="material-icons">phone</i>
+                </div>
+                <div class="col">
+                    {% for phone in person.phoneNumbers %}
+                        <p class="card-text">
+                            {{ phone.number }}{% if phone.type %} - {{ phone.type }}{% endif %}
+                            <i class="material-icons modify delete-number" data-id="{{ phone.id }}" title="delete number">remove_circle</i>
+                        </p>
+                    {% else %}
+                        <p><i>no phone numbers...</i></p>
+                    {% endfor %}
+                </div>
+                <div class="col-2">
+                    <i class="material-icons modify" id="new-number" title="add new number">add_circle</i>
+                </div>
+            </div>
+
+            {{ form_start(formPhone) }}
+            <div class="form-group">
+                {{ form_label(formPhone.number) }}
+                {{ form_widget(formPhone.number) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formPhone.type) }}
+                {{ form_widget(formPhone.type) }}
+            </div>
+            {{ form_widget(formPhone) }}
+            {{ form_end(formPhone) }}
+
+        </div>
     </div>
-    <div class="form-group">
-        {{ form_label(formAddress.street) }}
-        {{ form_widget(formAddress.street) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(formAddress.house) }}
-        {{ form_widget(formAddress.house) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(formAddress.flat) }}
-        {{ form_widget(formAddress.flat) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(formAddress.type) }}
-        {{ form_widget(formAddress.type) }}
-    </div>
-    {{ form_widget(formAddress) }}
-    {{ form_end(formAddress) }}
 
 {% endblock %}

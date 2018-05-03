@@ -3,17 +3,68 @@
 {% block title %}{{ person.firstName }} {{ person.lastName }} - Contact Box{% endblock %}
 
 {% block container %}
-<div class="row" style="margin-top: 50px;">
-
-    <div class="card" style="width: 50rem;">
+    <div class="card">
         <div class="card-body">
-            <h5 class="card-title">{{ person.firstName }} {{ person.lastName }}</h5>
-            {#<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>#}
+            <div class="row">
+                <div class="col">
+                    <h5 class="card-title">{{ person.firstName }} {{ person.lastName }}</h5>
+                </div>
+                <div class="col-3">
+                    <a href="{{ path('contact_person_modifyget', {'id': person.id }) }}" title="Edit person" class="card-link">
+                        <i class="material-icons">mode_edit</i></a>
+                    <a href="{{ path('contact_person_delete', {'id': person.id }) }}" title="Delete person" class="card-link">
+                        <i class="material-icons">delete</i></a>
+                </div>
+            </div>
             <p class="card-text">{{ person.description }}</p>
-            <a href="{{ path('contact_person_modifyget', {'id': person.id }) }}" title="Edit person" class="card-link">Edit</a>
-            <a href="{{ path('contact_person_delete', {'id': person.id }) }}" title="Delete person" class="card-link">Delete</a>
+            <br>
+
+            <div class="row">
+                <div class="col-1">
+                    {% if person.addresses.count > 0 %}
+                    <i class="material-icons">location_on</i>
+                    {% endif %}
+                </div>
+                <div class="col">
+                {% for address in person.addresses %}
+                    <p class="card-text">
+                        {{ address.street }} {{ address.house }}{% if address.flat %}/{{ address.flat }}{% endif %}, {{ address.city }}{% if address.type %} - {{ address.type }}{% endif %}
+                    </p>
+                {% endfor %}
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-1">
+                    {% if person.emails.count > 0 %}
+                        <i class="material-icons">email</i>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    {% for email in person.emails %}
+                        <p class="card-text">
+                            {{ email.address }}{% if email.type %} - {{ email.type }}{% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-1">
+                    {% if person.phoneNumbers.count > 0 %}
+                        <i class="material-icons">phone</i>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    {% for phone in person.phoneNumbers %}
+                        <p class="card-text">
+                            {{ phone.number }}{% if phone.type %} - {{ phone.type }}{% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
-
-</div>
 {% endblock %}

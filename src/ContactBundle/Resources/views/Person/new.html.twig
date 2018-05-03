@@ -3,23 +3,26 @@
 {% block title %}Add new person{% endblock %}
 
 {% block container %}
-<h1>Add new person:</h1>
-    {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.firstName) }}
-        {{ form_widget(form.firstName) }}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add new person:</h5>
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.firstName) }}
+                {{ form_widget(form.firstName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.lastName) }}
+                {{ form_widget(form.lastName) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
     </div>
-    <div class="form-group">
-        {{ form_label(form.lastName) }}
-        {{ form_widget(form.lastName) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-    </div>
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-
 
     {#<form method="post">#}
         {#<div class="form-group">#}
