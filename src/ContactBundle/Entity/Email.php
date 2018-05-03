@@ -31,7 +31,7 @@ class Email
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=50)
+     * @ORM\Column(name="type", type="string", length=50, nullable=true)
      */
     private $type;
 
