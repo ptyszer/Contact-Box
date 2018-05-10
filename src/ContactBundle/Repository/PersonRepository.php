@@ -17,4 +17,13 @@ class PersonRepository extends \Doctrine\ORM\EntityRepository
         )->getResult();
         return $persons;
     }
+
+    public function search($string)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT p FROM ContactBundle:Person p WHERE CONCAT(p.firstName, ' ', p.lastName) LIKE :string ORDER BY p.firstName ASC"
+            )->setParameter('string', '%'.$string.'%')
+            ->getResult();
+    }
 }

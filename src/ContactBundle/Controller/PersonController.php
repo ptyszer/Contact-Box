@@ -80,6 +80,16 @@ class PersonController extends Controller
     }
 
     /**
+     * @Route("/search", methods={"POST"})
+     */
+    public function searchAction(Request $request)
+    {
+        $string = $request->get('search');
+        $persons = $this->getDoctrine()->getRepository(Person::class)->search($string);
+        return $this->render('@Contact/Person/search_result.html.twig', array('persons' => $persons));
+    }
+
+    /**
      * @Route("/{id}/modify", methods={"GET"})
      */
     public function modifyGetAction($id)

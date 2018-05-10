@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}ContactBundle:Person:showAll{% endblock %}
+
+{% block container %}
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Search results:</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in persons %}
+            <tr data-id="{{ person.id }}">
+                <td>
+                    <a href="{{ path('contact_person_showsingle', {'id':  person.id }) }}"
+                       class="list-group-item">{{ person.firstName }} {{ person.lastName }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>no data</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
