@@ -39,16 +39,9 @@ class Person
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="imagePath", type="string", length=255, nullable=true)
-     */
-    private $imagePath;
 
     /**
      * @ORM\OneToMany(targetEntity="Address", mappedBy="person")

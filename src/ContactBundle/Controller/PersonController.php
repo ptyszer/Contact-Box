@@ -28,7 +28,7 @@ class PersonController extends Controller
             ->setMethod('POST')
             ->add('firstName', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('lastName', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('description', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('description', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('save', SubmitType::class, ['label' => 'Add Person', 'attr' => ['class' => 'btn btn-primary']])
             ->getForm();
 
@@ -45,7 +45,7 @@ class PersonController extends Controller
             ->setMethod('POST')
             ->add('firstName', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('lastName', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('description', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('description', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('save', SubmitType::class, ['label' => 'Add Person', 'attr' => ['class' => 'btn btn-primary']])
             ->getForm();
 
@@ -80,16 +80,6 @@ class PersonController extends Controller
     }
 
     /**
-     * @Route("/search", methods={"POST"})
-     */
-    public function searchAction(Request $request)
-    {
-        $string = $request->get('search');
-        $persons = $this->getDoctrine()->getRepository(Person::class)->search($string);
-        return $this->render('@Contact/Person/search_result.html.twig', array('persons' => $persons));
-    }
-
-    /**
      * @Route("/{id}/modify", methods={"GET"})
      */
     public function modifyGetAction($id)
@@ -104,7 +94,7 @@ class PersonController extends Controller
             ->setMethod('POST')
             ->add('firstName', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('lastName', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('description', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('description', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('save', SubmitType::class, ['label' => 'Edit Person', 'attr' => ['class' => 'btn btn-primary']])
             ->getForm();
 
@@ -156,7 +146,7 @@ class PersonController extends Controller
             ->setMethod('POST')
             ->add('firstName', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('lastName', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('description', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('description', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('save', SubmitType::class, ['label' => 'Add Person', 'attr' => ['class' => 'btn btn-primary']])
             ->getForm();
 
@@ -196,11 +186,21 @@ class PersonController extends Controller
     }
 
     /**
-     * @Route("/")
+     * @Route("/", methods={"GET"})
      */
     public function showAllAction()
     {
         $persons = $this->getDoctrine()->getRepository(Person::class)->findAllOrderedByName();
         return $this->render('@Contact/Person/show_all.html.twig', array('persons' => $persons));
+    }
+
+    /**
+     * @Route("/", methods={"POST"})
+     */
+    public function searchAction(Request $request)
+    {
+        $string = $request->get('search');
+        $persons = $this->getDoctrine()->getRepository(Person::class)->search($string);
+        return $this->render('@Contact/Person/search_result.html.twig', array('persons' => $persons));
     }
 }
