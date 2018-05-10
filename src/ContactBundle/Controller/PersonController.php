@@ -3,6 +3,7 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Entity\Address;
+use ContactBundle\Entity\ContactGroup;
 use ContactBundle\Entity\Email;
 use ContactBundle\Entity\Person;
 use ContactBundle\Entity\Phone;
@@ -14,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class PersonController extends Controller
 {
@@ -62,11 +62,30 @@ class PersonController extends Controller
     }
 
     /**
+     * @Route("/addGroup", methods={"POST"})
+     */
+    public function addGroupAction(Request $request)
+    {
+        $groupId = $request->get('group_id');
+        $personId = $request->get('person_id');
+        $group = $this->getDoctrine()->getRepository(ContactGroup::class)->findOneBy(['id' => $groupId]);
+        $person = $this->getDoctrine()->getRepository(Person::class)->findOneBy(['id' => $personId]);
+
+        $person->addGroup($group);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($person);
+        $em->flush();
+
+        return $this->redirectToRoute('contact_person_modifyget', ['id' => $person->getId()]);
+    }
+
+    /**
      * @Route("/{id}/modify", methods={"GET"})
      */
     public function modifyGetAction($id)
     {
         $person = $this->getDoctrine()->getRepository(Person::class)->findOneBy(['id' => $id]);
+        $groups = $this->getDoctrine()->getRepository(ContactGroup::class)->findAll();
         $address = new Address();
         $email = new Email();
         $phone = new Phone();
@@ -112,6 +131,7 @@ class PersonController extends Controller
             'formAddress' => $formAddress->createView(),
             'formEmail' => $formEmail->createView(),
             'formPhone' => $formPhone->createView(),
+            'groups' => $groups
         ));
     }
 
@@ -173,5 +193,4 @@ class PersonController extends Controller
         $persons = $this->getDoctrine()->getRepository(Person::class)->findAllOrderedByName();
         return $this->render('@Contact/Person/show_all.html.twig', array('persons' => $persons));
     }
-
 }

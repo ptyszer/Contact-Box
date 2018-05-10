@@ -5,6 +5,8 @@
 {% block container %}
     <div class="card">
         <div class="card-body">
+
+            {#person basic information#}
             <div class="row">
                 <div class="col">
                     <h5 class="card-title">{{ person.firstName }} {{ person.lastName }}</h5>
@@ -19,6 +21,7 @@
             <p class="card-text">{{ person.description }}</p>
             <br>
 
+            {#addresses#}
             <div class="row">
                 <div class="col-1">
                     {% if person.addresses.count > 0 %}
@@ -35,6 +38,7 @@
             </div>
             <br>
 
+            {#emails#}
             <div class="row">
                 <div class="col-1">
                     {% if person.emails.count > 0 %}
@@ -51,6 +55,7 @@
             </div>
             <br>
 
+            {#phone numbers#}
             <div class="row">
                 <div class="col-1">
                     {% if person.phoneNumbers.count > 0 %}
@@ -62,6 +67,23 @@
                         <p class="card-text">
                             {{ phone.number }}{% if phone.type %} - {{ phone.type }}{% endif %}
                         </p>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+
+            {#groups#}
+            <div class="row">
+                <div class="col-1">
+                    {% if person.groups.count > 0 %}
+                        <i class="material-icons" title="groups">group</i>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    {% for group in person.groups %}
+                        <a href="{{ path('contact_group_showsingle', {'id': group.id }) }}">
+                            {{ group.name }}
+                        </a>
                     {% endfor %}
                 </div>
             </div>

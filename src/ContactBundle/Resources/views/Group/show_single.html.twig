@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ group.name }} - Contact Box{% endblock %}
+
+{% block container %}
+
+    <div class="row">
+        <div class="col">
+            <h5 class="card-title">Group: {{ group.name }}</h5>
+        </div>
+        <div class="col">
+            <a href="{{ path('contact_group_delete', {'id': group.id }) }}" title="Delete group" class="card-link">
+                <i class="material-icons">delete</i></a>
+        </div>
+    </div>
+    <div class="row">
+        {% if group.persons|length > 0 %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for person in group.persons %}
+                    <tr data-id="{{ person.id }}">
+                        <td>
+                            <a href="{{ path('contact_person_showsingle', {'id':  person.id }) }}"
+                               class="list-group-item">{{ person.firstName }} {{ person.lastName }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('contact_group_removeperson', {'groupId': group.id, 'personId': person.id }) }}" title="remove from group">
+                                <i class="material-icons">remove</i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+{% endblock %}

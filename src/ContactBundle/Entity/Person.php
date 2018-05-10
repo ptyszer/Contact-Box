@@ -2,6 +2,7 @@
 
 namespace ContactBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,6 +66,12 @@ class Person
     private $emails;
 
     /**
+     * @ORM\ManyToMany(targetEntity="ContactGroup", inversedBy="persons")
+     * @ORM\JoinTable(name="person_group")
+     */
+    private $groups;
+
+    /**
      * @return string
      */
     public function getImagePath()
@@ -79,6 +86,7 @@ class Person
     {
         $this->imagePath = $imagePath;
     }
+
 
     /**
      * Get id
@@ -168,9 +176,10 @@ class Person
      */
     public function __construct()
     {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->phoneNumbers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addresses = new ArrayCollection();
+        $this->emails = new ArrayCollection();
+        $this->phoneNumbers = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -273,5 +282,39 @@ class Person
     public function getAddresses()
     {
         return $this->addresses;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \ContactBundle\Entity\ContactGroup $group
+     *
+     * @return Person
+     */
+    public function addGroup(\ContactBundle\Entity\ContactGroup $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \ContactBundle\Entity\ContactGroup $group
+     */
+    public function removeGroup(\ContactBundle\Entity\ContactGroup $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

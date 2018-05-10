@@ -2,6 +2,13 @@ $(function () {
     $('#formAddress').hide();
     $('#formEmail').hide();
     $('#formPhone').hide();
+    $('#formGroup').hide();
+
+    //active navbar link
+    var url = window.location;
+    $('.nav-item a').filter(function() {
+        return this.href == url;
+    }).parent().addClass('active');
 });
 
 $('#new-address').click(function(){
@@ -14,6 +21,10 @@ $('#new-email').click(function(){
 
 $('#new-number').click(function(){
     $('#formPhone').show();
+});
+
+$('#group-add').click(function(){
+    $('#formGroup').show();
 });
 
 $(".delete-address").on('click', function () {
