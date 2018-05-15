@@ -10,11 +10,4 @@ namespace ContactBundle\Repository;
  */
 class ContactGroupRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllOrderedByName(){
-        $em = $this->getEntityManager();
-        $groups = $em->createQuery(
-            'SELECT g FROM ContactBundle:ContactGroup g ORDER BY g.name ASC'
-        )->getResult();
-        return $groups;
-    }
 }

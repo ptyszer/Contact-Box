@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            {{ form_start(formAddress) }}
+            {{ form_start(formAddress, { 'attr': {'id': 'formAddress'} }) }}
             <div class="form-group">
                 {{ form_label(formAddress.city) }}
                 {{ form_widget(formAddress.city) }}
@@ -87,7 +87,7 @@
                 </div>
             </div>
 
-            {{ form_start(formEmail) }}
+            {{ form_start(formEmail, { 'attr': {'id': 'formEmail'} }) }}
             <div class="form-group">
                 {{ form_label(formEmail.address) }}
                 {{ form_widget(formEmail.address) }}
@@ -120,7 +120,7 @@
                 </div>
             </div>
 
-            {{ form_start(formPhone) }}
+            {{ form_start(formPhone, { 'attr': {'id': 'formPhone'} }) }}
             <div class="form-group">
                 {{ form_label(formPhone.number) }}
                 {{ form_widget(formPhone.number) }}

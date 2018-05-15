@@ -99,7 +99,7 @@ class GroupController extends Controller
      */
     public function showAllAction()
     {
-        $groups = $this->getDoctrine()->getRepository(ContactGroup::class)->findAllOrderedByName();
+        $groups = $this->getDoctrine()->getRepository(ContactGroup::class)->findBy([], ['name' => 'ASC']);
         return $this->render('@Contact/Group/show_all.html.twig', array('groups' => $groups));
     }
 }

@@ -22,19 +22,10 @@ class EmailController extends Controller
     {
         $email = new Email();
         $person = $this->getDoctrine()->getRepository(Person::class)->findOneBy(['id' => $id]);
-
-        $formEmail = $this->createFormBuilder($email, ['attr' => ['id' => 'formEmail']])
-            ->setAction($this->generateUrl('contact_email_add', ['id' => $person->getId()]))
-            ->setMethod('POST')
-            ->add('address', EmailType::class, ['attr' => ['class' => 'form-control']])
-            ->add('type', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
-            ->add('save', SubmitType::class, ['label' => 'Add Email', 'attr' => ['class' => 'btn btn-primary']])
-            ->getForm();
-
+        $formEmail = $this->createForm('ContactBundle\Form\EmailFormType', $email);
         $formEmail->handleRequest($request);
 
         if ($formEmail->isSubmitted() && $formEmail->isValid()) {
-            $email = $formEmail->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($email->setPerson($person));
             $em->flush();

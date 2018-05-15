@@ -10,14 +10,6 @@ namespace ContactBundle\Repository;
  */
 class PersonRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllOrderedByName(){
-        $em = $this->getEntityManager();
-        $persons = $em->createQuery(
-            'SELECT p FROM ContactBundle:Person p ORDER BY p.firstName ASC'
-        )->getResult();
-        return $persons;
-    }
-
     public function search($string)
     {
         return $this->getEntityManager()

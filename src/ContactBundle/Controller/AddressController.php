@@ -23,21 +23,10 @@ class AddressController extends Controller
         $address = new Address();
         $person = $this->getDoctrine()->getRepository(Person::class)->findOneBy(['id' => $id]);
 
-        $formAddress = $this->createFormBuilder($address, ['attr' => ['id' => 'formAddress']])
-            ->setAction($this->generateUrl('contact_address_add', ['id' => $person->getId()]))
-            ->setMethod('POST')
-            ->add('city', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('street', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('house', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('flat', NumberType::class, ['attr' => ['class' => 'form-control'],'required' => false])
-            ->add('type', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
-            ->add('save', SubmitType::class, ['label' => 'Add address', 'attr' => ['class' => 'btn btn-primary']])
-            ->getForm();
-
+        $formAddress = $this->createForm('ContactBundle\Form\AddressType', $address);
         $formAddress->handleRequest($request);
 
         if ($formAddress->isSubmitted() && $formAddress->isValid()) {
-            $address = $formAddress->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($address->setPerson($person));
             $em->flush();
