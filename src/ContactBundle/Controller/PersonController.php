@@ -14,20 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 class PersonController extends Controller
 {
     /**
-     * @Route("/new", methods={"GET"})
+     * @Route("/", methods={"GET"})
      */
-    public function newGetAction()
+    public function showAllAction()
     {
-        $person = new Person();
-        $form = $this->createForm('ContactBundle\Form\PersonType', $person);
-
-        return $this->render('@Contact/Person/new.html.twig', array('form' => $form->createView()));
+        $persons = $this->getDoctrine()->getRepository(Person::class)->findBy([], ['firstName' => 'ASC']);
+        return $this->render('@Contact/Person/show_all.html.twig', array('persons' => $persons));
     }
 
     /**
-     * @Route("/new", methods={"POST"})
+     * @Route("contact/new", methods={"GET", "POST"})
      */
-    public function newPostAction(Request $request)
+    public function newAction(Request $request)
     {
         $person = new Person();
         $form = $this->createForm('ContactBundle\Form\PersonType', $person);
@@ -41,6 +39,7 @@ class PersonController extends Controller
             return $this->redirectToRoute('contact_person_showsingle', ['id' => $person->getId()]);
         }
 
+        return $this->render('@Contact/Person/new.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -111,10 +110,9 @@ class PersonController extends Controller
     /**
      * @Route("/{id}/delete")
      */
-    public function deleteAction($id)
+    public function deleteAction(Person $person)
     {
         $em = $this->getDoctrine()->getManager();
-        $person = $em->getRepository(Person::class)->findOneBy(['id' => $id]);
         $em->remove($person);
         $em->flush();
 
@@ -122,22 +120,11 @@ class PersonController extends Controller
     }
 
     /**
-     * @Route("/{id}")
+     * @Route("contact/{id}")
      */
-    public function showSingleAction($id)
+    public function showSingleAction(Person $person)
     {
-        $person = $this->getDoctrine()->getRepository(Person::class)->findOneBy(['id' => $id]);
-
         return $this->render('@Contact/Person/show_single.html.twig', array('person' => $person));
-    }
-
-    /**
-     * @Route("/", methods={"GET"})
-     */
-    public function showAllAction()
-    {
-        $persons = $this->getDoctrine()->getRepository(Person::class)->findBy([], ['firstName' => 'ASC']);
-        return $this->render('@Contact/Person/show_all.html.twig', array('persons' => $persons));
     }
 
     /**

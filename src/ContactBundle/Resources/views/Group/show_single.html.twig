@@ -29,7 +29,7 @@
                                class="list-group-item">{{ person.firstName }} {{ person.lastName }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('contact_group_removeperson', {'groupId': group.id, 'personId': person.id }) }}" title="remove from group">
+                            <a href="{{ path('contact_group_removeperson', {'group': group.id, 'person': person.id }) }}" title="remove from group">
                                 <i class="material-icons">remove</i></a>
                         </td>
                     </tr>

@@ -16,24 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 class GroupController extends Controller
 {
     /**
-     * @Route("/new", methods={"GET"})
+     * @Route("/new", methods={"GET", "POST"})
      */
-    public function newGetAction()
-    {
-        $group = new ContactGroup();
-        $form = $this->createFormBuilder($group)
-            ->setMethod('POST')
-            ->add('name', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('save', SubmitType::class, ['label' => 'Add group', 'attr' => ['class' => 'btn btn-primary']])
-            ->getForm();
-
-        return $this->render('@Contact/Group/new.html.twig', array('form' => $form->createView()));
-    }
-
-    /**
-     * @Route("/new", methods={"POST"})
-     */
-    public function newPostAction(Request $request)
+    public function newAction(Request $request)
     {
         $group = new ContactGroup();
         $form = $this->createFormBuilder($group)
@@ -52,16 +37,14 @@ class GroupController extends Controller
             return $this->redirectToRoute('contact_group_showsingle', ['id' => $group->getId()]);
         }
 
+        return $this->render('@Contact/Group/new.html.twig', array('form' => $form->createView()));
     }
 
     /**
-     * @Route("/{groupId}/removePerson/{personId}")
+     * @Route("/{group}/removePerson/{person}")
      */
-    public function removePersonAction($groupId, $personId)
+    public function removePersonAction(ContactGroup $group, Person $person)
     {
-        $group = $this->getDoctrine()->getRepository(ContactGroup::class)->findOneBy(['id' => $groupId]);
-        $person = $this->getDoctrine()->getRepository(Person::class)->findOneBy(['id' => $personId]);
-
         $person->removeGroup($group);
         $em = $this->getDoctrine()->getManager();
         $em->persist($person);
@@ -73,10 +56,9 @@ class GroupController extends Controller
     /**
      * @Route("/{id}/delete")
      */
-    public function deleteAction($id)
+    public function deleteAction(ContactGroup $group)
     {
         $em = $this->getDoctrine()->getManager();
-        $group = $em->getRepository(ContactGroup::class)->findOneBy(['id' => $id]);
         $em->remove($group);
         $em->flush();
 
@@ -87,10 +69,8 @@ class GroupController extends Controller
     /**
      * @Route("/{id}")
      */
-    public function showSingleAction($id)
+    public function showSingleAction(ContactGroup $group)
     {
-        $group = $this->getDoctrine()->getRepository(ContactGroup::class)->findOneBy(['id' => $id]);
-
         return $this->render('@Contact/Group/show_single.html.twig', array('group' => $group));
     }
 
